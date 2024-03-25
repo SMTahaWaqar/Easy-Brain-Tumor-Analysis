@@ -4,9 +4,12 @@ from keras.models import load_model
 from keras.preprocessing import image
 import streamlit as st
 from streamlit_option_menu import option_menu
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-model = load_model('./model.h5')
+model = load_model('/kaggle/working/model.h5')
 
 # Function to run the Keras classification model and get the predicted class
 def predict_class(tumor_image):
@@ -23,8 +26,8 @@ def predict_class(tumor_image):
 
 # Function to generate report using Gemini Pro model
 def generate_report(class_name):
-    #Call Gemini Pro API to generate report
-        GOOGLE_API_KEY='AIzaSyCrW3BMPA-afN7_jEfQGfGm4WUqpr-IuxE'
+    # # Call Gemini Pro API to generate report
+        GOOGLE_API_KEY=os.getenv('GEMINI-API-KEY')
         genai.configure(api_key=GOOGLE_API_KEY)
         model = genai.GenerativeModel('gemini-1.0-pro-latest')
         if class_name == 'notumor':
@@ -32,7 +35,7 @@ def generate_report(class_name):
             print(response)
             return response
         elif class_name == 'glioma' or class_name == 'meningioma' or class_name == 'pituitary':
-            response = model.generate_content(f"Explain in five to six lines paragraph to a person whose scan result showed signs of {class_name} The doctor isnt available and the explanantion should include the possible cure chances keeping all factors such as age or other conditions in mind, and should not freakout or disturb the patient. Also it should not authorize any knowledge that might be medically unethical or might concide with a doctor.")
+            response = model.generate_content(f"A patient has received a scan result indicating signs of {class_name} brain tumor. Their doctor is unavailable. Write a 5-6 line explanation focused on reassurance and the next steps. Emphasize the need for further medical consultation. Avoid making claims about cure chances, as these depend on individual factors. Do not use overly technical language, and maintain a sensitive tone.")
             print(response)
             return response.text
 
@@ -76,12 +79,12 @@ if selected == 'Home':
 
 elif selected == 'About':
     st.write("## About")
-    st.write("This web application uses machine learning to classify brain tumor and provide user-friendly non-medical explanation, symptoms, recovery chances and a complete report summary of the detected tumor using Gemini Pro.")
+    st.write("This web application uses machine learning to classify brain tumor and  Gemini 1.0-Pro-Latest to provide user-friendly non-medical explanation of the detected tumor in a summarized manner.")
     st.write("### Our Team")
     col1, col2, col3 = st.columns(3)
     with col1:
         st.write('Syed Riaz Ali')
-        st.write('Muhammad Rafay Khan')
+        st.write('Mohammad Rafay Khan')
     with col2:
         st.write('S.M. Taha Waqar')
         st.write('Hamza bin Ashraf')
