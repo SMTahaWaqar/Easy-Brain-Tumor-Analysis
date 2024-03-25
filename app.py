@@ -37,11 +37,11 @@ def generate_report(class_name):
             return response.text
 
 
-st.title("Easy Brain Tumor Analysis")
+st.title("NeuroSight ")
 st.write("###### Disclaimer: **We do not provide any kind of professional medical advice**")
 
 with st.sidebar:
-    selected = option_menu("Easy Brain Tumor Analysis", ["Home", 'About'],
+    selected = option_menu("NeuroSight ", ["Home", 'About'],
         icons=['house-fill', 'bi-people-fill'], menu_icon="bi-file-earmark-medical-fill", default_index=0)
 
 # Home Page
