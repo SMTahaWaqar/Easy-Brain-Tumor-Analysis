@@ -23,7 +23,7 @@ def predict_class(tumor_image):
 
 # Function to generate report using Gemini Pro model
 def generate_report(class_name):
-    # # Call Gemini Pro API to generate report
+    #Call Gemini Pro API to generate report
         GOOGLE_API_KEY='AIzaSyCrW3BMPA-afN7_jEfQGfGm4WUqpr-IuxE'
         genai.configure(api_key=GOOGLE_API_KEY)
         model = genai.GenerativeModel('gemini-1.0-pro-latest')
@@ -86,5 +86,4 @@ elif selected == 'About':
         st.write('S.M. Taha Waqar')
         st.write('Hamza bin Ashraf')
     with col3:
-        st.write('Aisha')
         st.write('Syed Maaz Ali')
